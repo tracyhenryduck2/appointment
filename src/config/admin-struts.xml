@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.multipart.maxSize" value="1073741824"/>
+   <!-- <constant name="struts.enable.DynamicMethodInvocation" value="false" /> -->
+   <!--  <constant name="struts.devMode" value="false" /> -->
+   <package name="member" extends="login.interceptor"
+		namespace="/admin">
+		<action name="Customer" class="com.admin.action.CustomerAction">
+			 		<result name="toAddCustomer">/admin/customer_edit.jsp</result>
+			 		<result name="list">/admin/customer_list.jsp</result>
+			 		<result name="search">/admin/customer_search.jsp</result>
+		</action>
+		<action name="Rules" class="com.admin.action.RulesAction">
+			 		<result name="toAddRules">/admin/rules_edit.jsp</result>
+			 		<result name="list">/admin/rules_list.jsp</result>
+			 		<result name="search">/admin/rules_search.jsp</result>
+		</action>
+	</package>
+		
+</struts>
