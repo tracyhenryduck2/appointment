@@ -448,9 +448,11 @@ function calendar(y, m) {
     this[tmp2].solarTerms = solarTerm[m * 2 + 1];
     if (m == 3) this[tmp1].color = 'red'; //清明颜色
 
+var patt1 = new RegExp(/^(\d{2})(\d{2})([\s\*])(.+)$/g);
+var patt2 = new RegExp(/^(\d{2})(.{2})([\s\*])(.+)$/g);
     //国历节日
     for (i  in  sFtv)
-        if (sFtv[i].match(/^(\d{2})(\d{2})([\s\*])(.+)$/))
+        if (patt1.test(sFtv[i]))
             if (Number(RegExp.$1) == (m + 1)) {
                 this[Number(RegExp.$2) - 1].solarFestival += RegExp.$4 + '  '
                 if (RegExp.$3 == '*')  this[Number(RegExp.$2) - 1].color = 'red'
@@ -459,7 +461,7 @@ function calendar(y, m) {
 
     //农历节日
     for (i  in  lFtv)
-        if (lFtv[i].match(/^(\d{2})(.{2})([\s\*])(.+)$/)) {
+        if (patt2.test(lFtv[i])) {
             tmp1 = Number(RegExp.$1) - firstLM
             if (tmp1 == -11)  tmp1 = 1
             if (tmp1 >= 0 && tmp1 < n) {
