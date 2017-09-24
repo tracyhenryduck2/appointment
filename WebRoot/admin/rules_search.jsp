@@ -9,8 +9,7 @@ String path = request.getContextPath();
 <title></title>                          
 <script type="text/javascript">        
 	function search(){                          
-			Dialog.opener().document.getElementById("startDate").value = $("#startDate").val()||"";    
-			Dialog.opener().document.getElementById("endDate").value = $("#endDate").val()||"";    
+			Dialog.opener().document.getElementById("date").value = $("#date").val()||"";      
 			Dialog.opener().document.getElementById("type").value = $("#type").val()||"";    
 			Dialog.opener().document.getElementById("number").value = $("#number").val()||"";    
 			Dialog.opener().document.form1.submit();                     
@@ -22,12 +21,9 @@ String path = request.getContextPath();
 		/* form1表单进行验证 */               
 		$("#form1").validate({              
 			rules:{                             
-			    "rulesBean.startDate":{            
+			    "rulesBean.date":{            
 			        number:true,range:[0,9999999999]
-			    },                              
-			    "rulesBean.endDate":{            
-			        number:true,range:[0,9999999999]
-			    },                              
+			    },                                                         
 			    "rulesBean.type":{            
 			        number:true,range:[0,9999999999]
 			    },                              
@@ -50,20 +46,12 @@ String path = request.getContextPath();
 <table cellpadding="0" cellspacing="0" width="100%" class="GF-grid"> 
   <tr>                                    
     	<td align="right" width="30%" > 
-                            起始日期<span class="mark"></span>   
+                            规则日期<span class="mark"></span>   
         </td>                            
         <td>                             
             <input type="text" name="rulesBean.startDate" id="startDate"  value="${rulesBean.startDate}" class="GF-field"/>   
         </td>                            
-  </tr>                                
-  <tr>                                    
-    	<td align="right" width="30%" > 
-                            结束日期<span class="mark"></span>   
-        </td>                            
-        <td>                             
-            <input type="text" name="rulesBean.endDate" id="endDate"  value="${rulesBean.endDate}" class="GF-field"/>   
-        </td>                            
-  </tr>                                
+  </tr>                                                                
   <tr>                                    
     	<td align="right" width="30%" > 
                             类型<span class="mark"></span>   

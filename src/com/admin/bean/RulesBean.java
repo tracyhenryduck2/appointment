@@ -18,16 +18,11 @@ public class RulesBean {
 	private Long id;
 
 	/**
-	 * 起始日期 
+	 * 规则日期 
 	*/
-	@Column(name="start_date")
-	private Long startDate;
+	@Column(name="date")
+	private Long date;
 
-	/**
-	 * 结束日期 
-	*/
-	@Column(name="end_date")
-	private Long endDate;
 
 	/**
 	 * 类型 
@@ -57,36 +52,21 @@ public class RulesBean {
     	this.id = id;
     }
     	
-    /** 
-     * 起始日期
-     * @return 
-     */ 
-    public Long getStartDate() {
-    	return startDate;
-    }
-    
-    /** 
-     * 起始日期
-     * @param 
-     */ 
-    public void setStartDate(Long startDate) {
-    	this.startDate = startDate;
-    }
     	
     /** 
      * 结束日期
      * @return 
      */ 
-    public Long getEndDate() {
-    	return endDate;
+    public Long getDate() {
+    	return date;
     }
     
     /** 
      * 结束日期
      * @param 
      */ 
-    public void setEndDate(Long endDate) {
-    	this.endDate = endDate;
+    public void setDate(Long date) {
+    	this.date = date;
     }
     	
     /** 
@@ -121,19 +101,4 @@ public class RulesBean {
     	this.number = number;
     }
     	
-    public String getStartDateStr() {
-    	return Common.DateLongToStr(startDate);
-    }
-    
-    public void setStartDateStr(String startDate) {
-    	this.startDate = Common.DateStrToLong(startDate);
-    }
-    	
-    public String getEndDateStr() {
-    	return Common.DateLongToStr(endDate);
-    }
-    
-    public void setEndDateStr(String endDate) {
-    	this.endDate = Common.DateStrToLong(endDate);
-    }
 }

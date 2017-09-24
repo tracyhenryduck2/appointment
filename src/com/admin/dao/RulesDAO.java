@@ -29,13 +29,9 @@ public class RulesDAO extends BaseDAO {
     			objectList.add(rulesBean.getId());
     			sqlWhere += " AND a.id = ? ";
     		} 
-    		if(rulesBean.getStartDate() != null) { 
-    			objectList.add(rulesBean.getStartDate());
-    			sqlWhere += " AND a.start_date = ? ";
-    		} 
-    		if(rulesBean.getEndDate() != null) { 
-    			objectList.add(rulesBean.getEndDate());
-    			sqlWhere += " AND a.end_date = ? ";
+    		if(rulesBean.getDate() != null) { 
+    			objectList.add(rulesBean.getDate());
+    			sqlWhere += " AND a.date = ? ";
     		} 
     		if(rulesBean.getType() != null) { 
     			objectList.add(rulesBean.getType());

@@ -59,8 +59,7 @@ String path = request.getContextPath();
 		}      
 		function search() {  
 			Dialog.open({Title:"查询", Width:650, Height:220, URL:"<%=path%>/admin/Rules!search.action",OnLoad:function(){
-			     this.innerDoc.getElementById("start_date").value = $("#start_date").val();
-			     this.innerDoc.getElementById("end_date").value = $("#end_date").val();
+			     this.innerDoc.getElementById("date").value = $("#date").val();
 			     this.innerDoc.getElementById("type").value = $("#type").val();
 			     this.innerDoc.getElementById("number").value = $("#number").val();
            }
@@ -82,8 +81,7 @@ String path = request.getContextPath();
 	</GF:ToolBar>   
     <form action="<%=path%>/admin/Rules!list.action" name="form1" id="form1" method="get">  
    
-			<input type="hidden" name="rulesBean.startDate" id="startDate" value="${rulesBean.startDate}"/> 
-			<input type="hidden" name="rulesBean.endDate" id="endDate" value="${rulesBean.endDate}"/> 
+			<input type="hidden" name="rulesBean.date" id="date" value="${rulesBean.date}"/> 
 			<input type="hidden" name="rulesBean.type" id="type" value="${rulesBean.type}"/> 
 			<input type="hidden" name="rulesBean.number" id="number" value="${rulesBean.number}"/> 
 		   	<input type="hidden" name="sortname" value="${page.sortname}"/>    
@@ -93,19 +91,17 @@ String path = request.getContextPath();
 			<table id="table1" width="100%" height="100%"  border="0" cellspacing="0" cellpadding="0"> 
 			   	 <thead>
 			   		<tr>  
-			   			<th><span><input type="checkbox" onClick="checkAll(this,'idArr')"  width="20"/></span></th>     
-			   			<th sortname="start_date" width="10%">起始日期</th>	   
-			   			<th sortname="end_date" width="10%">结束日期</th>	   
-			   			<th sortname="type" width="10%">类型</th>	   
-			   			<th sortname="number" width="10%">最大人数</th>	   
+			   			<th width="10%"><span><input type="checkbox" onClick="checkAll(this,'idArr')"  width="20"/></span></th>     
+			   			<th sortname="date" width="30%">规则日期</th>	   	   
+			   			<th sortname="type" width="30%">类型</th>	   
+			   			<th sortname="number" width="30%">最大人数</th>	   
 			   		</tr> 
 			   	</thead>
 			   	<tbody> 
 			   		<s:iterator value="#request.list" id="map"> 
 		   			 <tr> 
 		   			 	 <td align="left"><input type="checkbox" name="idArr"  value="${map.id}"/></td> 
-		   			 	 <td>${map.start_date}</td>    
-		   			 	 <td>${map.end_date}</td>    
+		   			 	 <td>${map.date}</td>      
 		   			 	 <td>${map.type}</td>    
 		   			 	 <td>${map.number}</td>    
 		   			 </tr>

@@ -35,12 +35,9 @@ String path = request.getContextPath();
 		/* form1表单进行验证 */               
 		$("#form1").validate({              
 			rules:{                             
-			    "rulesBean.startDate":{            
+			    "rulesBean.date":{            
 			        required : true,number:true,range:[0,9999999999]
-			    },                              
-			    "rulesBean.endDate":{            
-			        required : true,number:true,range:[0,9999999999]
-			    },                              
+			    },                                                          
 			    "rulesBean.type":{            
 			        required : true,number:true,range:[0,9999999999]
 			    },                              
@@ -66,20 +63,12 @@ String path = request.getContextPath();
 <table cellpadding="0" cellspacing="0" width="100%" class="GF-grid"> 
   <tr>                                    
     	<td align="right" width="30%" > 
-                            起始日期<span class="mark">*</span>   
+                            规则日期<span class="mark">*</span>   
         </td>                            
         <td>                             
-            <input type="text" name="rulesBean.startDate" id="startDate"  value="${rulesBean.startDate}" class="GF-field"/>   
+            <input type="text" name="rulesBean.date" id="date"  value="${rulesBean.date}" class="GF-field"/>   
         </td>                            
-  </tr>                                
-  <tr>                                    
-    	<td align="right" > 
-                            结束日期<span class="mark">*</span>   
-        </td>                            
-        <td>                             
-            <input type="text" name="rulesBean.endDate" id="endDate"  value="${rulesBean.endDate}" class="GF-field"/>   
-        </td>                            
-  </tr>                                
+  </tr>                                                                
   <tr>                                    
     	<td align="right" > 
                             类型<span class="mark">*</span>   
