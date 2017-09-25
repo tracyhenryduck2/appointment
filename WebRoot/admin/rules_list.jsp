@@ -17,7 +17,27 @@ String path = request.getContextPath();
     <link href="../datewidget/skin.css" rel="stylesheet" type="text/css"/>
     <link href="../datewidget/fontSize12.css" rel="stylesheet" type="text/css"/>
     <link href="../datewidget/calendar.css" rel="stylesheet" type="text/css"/>
-    
+    <style type="text/css">
+#operation td {
+	padding: 5px;
+    border: 1px solid black;
+}
+input.button6{
+	box-sizing: border-box;
+	    align-items: flex-start;
+    text-align: center;
+    cursor: default;
+    color: buttontext;
+    background-color: buttonface;
+    box-sizing: border-box;
+    padding: 2px 6px 3px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+}
+
+    </style>
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/calendar.js"></script>  
 	<script type="text/javascript">    
@@ -97,7 +117,7 @@ String path = request.getContextPath();
 
     <div id="myrl" style="width:820px; margin-left:auto; margin-right:auto; height:840px; overflow:hidden;">
         <form name=CLD>
-            <TABLE class="biao" width="800px">
+            <TABLE id="func" class="biao" width="800px">
                 <TBODY>
                 <TR>
                     <TD class="calTit" colSpan=7 style="height:30px;padding-top:3px;text-align:center;">
@@ -202,8 +222,8 @@ String path = request.getContextPath();
                   </tr>
               </table></td>
             </tr>
-          </table></td>
-          <td width="100%" align="center"><table  border="1"  cellpadding="5" cellspacing="5">
+          </table>
+          <table id="operation"  border="1"  cellpadding="5" cellspacing="5">
             <tr align="center">
             	<td><input type=button value='提交' class="button6"  onclick=h_submit()></td>
               <td><input type=button value="重置" class="button6"  onclick=rebuild()></td>
@@ -214,9 +234,7 @@ String path = request.getContextPath();
               <td width="25" bgcolor="#CFDFF0">&nbsp;</td>
               <td>今 日</td>
               </tr>
-          </table></td>
-        </tr>
-      </table>
+          </table>
         </form>
     </div>
 </div>
@@ -235,10 +253,4 @@ function h_submit(){
    </GF:BodyCaption>    
    <iframe name="fram" id="fram" style="display:none"></iframe>    
   </body> 
-  <script type="text/javascript">   
-   	$(function(){      
-   		/* 渲染表格 DataGrid */      
-   		$("#table1").render().sort("form1");     
-   	});  
-</script> 
 </html>   
