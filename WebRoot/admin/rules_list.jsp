@@ -38,8 +38,9 @@ input.button6{
 }
 
     </style>
-    <script type="text/javascript" src="../js/jquery.js"></script>
-    <script type="text/javascript" src="../js/calendar.js"></script>  
+    <script type="text/javascript" src="../js/jquery1.9.js"></script>
+    <script type="text/javascript" src="../js/calendar.js"></script>
+    <script type="text/javascript" src="../js/layer.js"></script>  
 	<script type="text/javascript">    
 		function add(){      
 			Dialog.open({Title:"新增", Width:600, Height:360, URL:"<%=path%>/admin/Rules!toAddRules.action"});   
@@ -93,6 +94,10 @@ input.button6{
 			});    
 		}      
 		
+
+
+
+
 	</script>
   </head> 
   <body>  
@@ -106,8 +111,6 @@ input.button6{
 	  	<GF:ToolBarItem id="export" label="导出" ico="images/ico/export.gif" onclick="exportExcel();"/>
 	  	<GF:ToolBarItem id="refresh" label="刷新" ico="images/ico/refresh.gif" onclick="refresh();"/>  
 	</GF:ToolBar>   
-     
-
 <div class="main">
     <div class="pathBar" style="margin-bottom:2px;">
         <div class="pathBarPos">
@@ -246,10 +249,12 @@ function h_submit(){
   //重置
  function rebuild(){
 	hDays=[];
-}          
+  layer.alert(layer.v + ' - 贤心出品 sentsin.com');
+}     
+
+
  </SCRIPT>
 <div id="details" style="margin-top:-1px;"></div>
-
    </GF:BodyCaption>    
    <iframe name="fram" id="fram" style="display:none"></iframe>    
   </body> 
