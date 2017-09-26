@@ -249,7 +249,32 @@ function h_submit(){
   //重置
  function rebuild(){
 	hDays=[];
-  layer.alert(layer.v + ' - 贤心出品 sentsin.com');
+layer.open({
+  content: 'test'
+  ,btn: ['按钮一', '按钮二', '按钮三']
+  , success: function (layero, index) {  
+                //传入参数，并赋值给iframe的元素  
+        var jquerySendHelloButton = $(".layui-layer-btn0");  
+                 jquerySendHelloButton.css("color","red");
+             console.log(jquerySendHelloButton);
+            }, 
+  yes: function(index, layero){
+    //按钮【按钮一】的回调
+    console.log("aaa");
+    layer.closeAll();
+
+  },  cancel: function(){ 
+    //右上角关闭回调
+        console.log("bbb");
+  },btn2: function(index, layero){
+    //按钮【按钮二】的回调
+    console.log("ccc");
+  },btn3: function(index, layero){
+    //按钮【按钮三】的回调
+    console.log("ddd");
+  }
+
+});
 }     
 
 
