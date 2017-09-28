@@ -95,7 +95,25 @@ input.button6{
 		}      
 		
 
+//------王立岩------start------
+//日期点击函数
+function mOck(thisObj, v){
 
+	var dayContainer = thisObj.getElementsByTagName("font")[0];
+	//记录是否为周末
+	var lx='0';
+	var nian = $('#nian').text();
+	var yue = $('#yue').text();
+	var dayJson = "";
+	var day = dayContainer.innerHTML;
+	var dayColor = dayContainer.attributes["color"];
+	var dayF = nian+'/'+addZ(yue)+'/'+addZ(day);
+	if(dayColor&&dayColor.value=='red'&&getH(dayF)){
+		 lx = '1';
+	}
+	dayJson = '{holiday:'+nian+"-"+addZ(yue)+"-"+addZ(day)+',lx:'+lx+'}';
+   Dialog.open({Title:nian+"-"+addZ(yue)+"-"+addZ(day)+"规则制定", Width:600, Height:360, URL:"<%=path%>/admin/Rules!toAddRules.action?date="+nian+"-"+addZ(yue)+"-"+addZ(day)});  
+}
 
 
 	</script>
@@ -249,33 +267,42 @@ function h_submit(){
   //重置
  function rebuild(){
 	hDays=[];
-layer.open({
-  content: 'test'
-  ,btn: ['按钮一', '按钮二', '按钮三']
-  , success: function (layero, index) {  
-                //传入参数，并赋值给iframe的元素  
-        var jquerySendHelloButton = $(".layui-layer-btn0");  
-                 jquerySendHelloButton.css("color","red");
-             console.log(jquerySendHelloButton);
-            }, 
-  yes: function(index, layero){
-    //按钮【按钮一】的回调
-    console.log("aaa");
-    layer.closeAll();
+}     
 
-  },  cancel: function(){ 
-    //右上角关闭回调
-        console.log("bbb");
-  },btn2: function(index, layero){
-    //按钮【按钮二】的回调
-    console.log("ccc");
-  },btn3: function(index, layero){
-    //按钮【按钮三】的回调
-    console.log("ddd");
-  }
+/*初始化日期*/
+
+$(function() {
+    initRiliIndex();
+    clear();
+    $("#nian").html(tY);
+    $("#yue").html(tM + 1);
+    drawCld(tY, tM);
+
+    /*年份递减*/
+    $("#nianjian").click(function() {
+        dateSelection.goPrevYear();
+
+    });
+    /*年份递加*/
+    $("#nianjia").click(function() {
+        dateSelection.goNextYear();
+
+    });
+
+    /*月份递减*/
+    $("#yuejian").click(function() {
+
+        dateSelection.goPrevMonth();
+    });
+
+    /*月份递加*/
+    $("#yuejia").click(function() {
+        dateSelection.goNextMonth();
+
+    });
+
 
 });
-}     
 
 
  </SCRIPT>

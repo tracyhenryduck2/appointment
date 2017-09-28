@@ -5,6 +5,7 @@ import java.util.Map;
 import com.common.BaseDAO;
 import com.common.Page;
 import com.admin.bean.CustomerBean;
+import com.admin.bean.RulesBean;
                         
 /**                     
  *                      
@@ -68,4 +69,6 @@ public class CustomerDAO extends BaseDAO {
     	  
     	return j.queryForList("select * from card");
     }
+    
+
 }                       

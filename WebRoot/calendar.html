@@ -156,6 +156,43 @@ function h_submit(){
  function rebuild(){
 	hDays=[];
 }          
+
+
+/*初始化日期*/
+
+$(function() {
+    initRiliIndex();
+    clear();
+    $("#nian").html(tY);
+    $("#yue").html(tM + 1);
+    drawCld(tY, tM);
+
+    /*年份递减*/
+    $("#nianjian").click(function() {
+        dateSelection.goPrevYear();
+
+    });
+    /*年份递加*/
+    $("#nianjia").click(function() {
+        dateSelection.goNextYear();
+
+    });
+
+    /*月份递减*/
+    $("#yuejian").click(function() {
+
+        dateSelection.goPrevMonth();
+    });
+
+    /*月份递加*/
+    $("#yuejia").click(function() {
+        dateSelection.goNextMonth();
+
+    });
+
+
+});
+
  </SCRIPT>
 <div id="details" style="margin-top:-1px;"></div>
 </body>

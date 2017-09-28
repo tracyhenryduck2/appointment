@@ -1,5 +1,8 @@
 package com.admin.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import com.admin.bean.RulesBean;
@@ -20,13 +23,45 @@ public class RulesAction extends BaseActionSupport {
     private RulesDAO dao = new RulesDAO(); 
     private RulesBean rulesBean = new RulesBean();    
     private final String tableDesc = "规则";
-    /**    
+    private String date = null;
+    private final  SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+    
+    
+    public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/**    
      * 转向添加页面  
      * @return  
      */    
     public String toAddRules() {
+    	
+        List<Map<String, Object>> cList = dao.getList();
+        request.setAttribute("cList", cList);
         if ("1".equals(oper)) {   
     	    rulesBean = dao.select(RulesBean.class,rulesBean.getId());  
+    	}else if(date!=null){
+    		try {
+				System.out.println("date == "+date);
+				Date date2 = df.parse(date+" 00:00:00");
+				Long d =date2.getTime()/1000;
+				rulesBean = dao.getRulesByDate(d);
+				if(rulesBean == null){
+					rulesBean = new RulesBean();
+					rulesBean.setDate(d);
+				}
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+                showMessage += "时间格式有误";  
+                return error;  
+			}
     	}    
     	return "toAddRules";    
     } 
@@ -36,14 +71,18 @@ public class RulesAction extends BaseActionSupport {
      */    
     public String addRules() {  
         try {   
-            showMessage = "新增"+tableDesc; 
-            boolean result = true;  
-            if ("1".equals(oper)) {    
-                showMessage = "编辑"+tableDesc;  
+            showMessage = "制定"+tableDesc; 
+            boolean result = false;  
+            
+            int d = dao.getRulesNumByDate(rulesBean.getDate());
+            if(d>0){
                 result = dao.update(rulesBean); 
-            } else { 
-                result = dao.insert(rulesBean); 
+            }else{
+            	result = dao.insert(rulesBean); 
             }
+          
+   
+
             if (result) {  
                 showMessage += "成功";  
                 return reload_success; 

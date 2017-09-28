@@ -50,5 +50,25 @@ public class RulesDAO extends BaseDAO {
     	page.setTotalRows(j.queryForInteger("select count(*) from rules a "+sqlWhere, pram));
     	List<Map<String,Object>> list=j.queryForPageList(sql, page.getPageNo(),page.getPageSize(),pram);  
     	return list;      
-    }                   
+    }
+    
+    public RulesBean getRulesByDate(Long date){
+    	String sql = "select * from rules where date = "+ date;
+    	
+    	return j.queryForBean(RulesBean.class, sql);
+    	
+    }
+    
+    public int getRulesNumByDate(Long date){
+    	String sql = "select count(*) from rules where date = "+ date;
+    	
+    	return j.queryForInteger(sql);
+    	
+    }
+    
+    
+    public List<Map<String,Object>> getList(){
+  	  
+    	return j.queryForList("select * from card");
+    }
 }                       
