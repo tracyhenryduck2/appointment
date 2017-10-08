@@ -156,7 +156,6 @@ $(function() {
         dateSelection.goNextYear();
 
     });
-
     /*月份递减*/
     $("#yuejian").click(function() {
 
@@ -321,6 +320,54 @@ $(function() {
         </form>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+<SCRIPT language="JavaScript">
+	//提交
+function h_submit(){
+	alert(hDays);
+}
+  //重置
+ function rebuild(){
+	hDays=[];
+}     
+
+/*初始化日期*/
+
+$(function() {
+    initRiliIndex();
+    clear();
+    $("#nian").html(tY);
+    $("#yue").html(tM + 1);
+    drawCld(tY, tM);
+
+    /*年份递减*/
+    $("#nianjian").click(function() {
+        dateSelection.goPrevYear();
+
+    });
+    /*年份递加*/
+    $("#nianjia").click(function() {
+        dateSelection.goNextYear();
+
+    });
+
+    /*月份递减*/
+    $("#yuejian").click(function() {
+
+        dateSelection.goPrevMonth();
+    });
+
+    /*月份递加*/
+    $("#yuejia").click(function() {
+        dateSelection.goNextMonth();
+
+    });
+
+
+});
+
+>>>>>>> 48216fd30b42a142b6aefabd02f7207abc811bd7
 
 <div id="details" style="margin-top:-1px;"></div>
    </GF:BodyCaption>     
