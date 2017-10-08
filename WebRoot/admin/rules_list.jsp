@@ -95,8 +95,92 @@ input.button6{
 		}      
 		
 
+//------王立岩------start------
+//日期点击函数
+function mOck(thisObj, v){
 
+	var dayContainer = thisObj.getElementsByTagName("font")[0];
+	//记录是否为周末
+	var lx='0';
+	var nian = $('#nian').text();
+	var yue = $('#yue').text();
+	var dayJson = "";
+	var day = dayContainer.innerHTML;
+	var dayColor = dayContainer.attributes["color"];
+	var dayF = nian+'/'+addZ(yue)+'/'+addZ(day);
+	if(dayColor&&dayColor.value=='red'&&getH(dayF)){
+		 lx = '1';
+	}
+	dayJson = '{holiday:'+nian+"-"+addZ(yue)+"-"+addZ(day)+',lx:'+lx+'}';
+   Dialog.open({Title:nian+"-"+addZ(yue)+"-"+addZ(day)+"规则制定", Width:600, Height:360, URL:"<%=path%>/admin/Rules!toAddRules.action?date="+nian+"-"+addZ(yue)+"-"+addZ(day)});  
+}
 
+    //提交
+function h_submit(){
+    alert(hDays);
+}
+  //重置
+ function rebuild(){
+    hDays=[];
+}     
+
+function requst(ds,ds1){
+              $.ajax({
+               type: "GET",
+               url: "<%=path %>/admin/Rules!monthRulesList.action",
+               data: "month="+ds+"-"+(ds1+1),
+               success: function(data){
+
+                       var d = eval("("+data+")");
+                       drawCld(tY, tM,d);
+                  }
+            });
+}
+
+/*初始化日期*/
+
+$(function() {
+    initRiliIndex();
+    clear();
+    $("#nian").html(tY);
+    $("#yue").html(tM + 1);
+    //drawCld(tY, tM);
+
+    /*年份递减*/
+    $("#nianjian").click(function() {
+        dateSelection.goPrevYear();
+
+    });
+    /*年份递加*/
+    $("#nianjia").click(function() {
+        dateSelection.goNextYear();
+
+    });
+
+    /*月份递减*/
+    $("#yuejian").click(function() {
+
+        dateSelection.goPrevMonth();
+    });
+
+    /*月份递加*/
+    $("#yuejia").click(function() {
+        dateSelection.goNextMonth();
+
+    });
+    
+            $.ajax({
+               type: "GET",
+               url: "<%=path %>/admin/Rules!monthRulesList.action",
+               data: "month="+tY+"-"+addZ(tM+1),
+               success: function(data){
+
+                       var d = eval("("+data+")");
+                       drawCld(tY, tM,d);
+                  }
+            });
+
+});
 
 	</script>
   </head> 
@@ -228,59 +312,17 @@ input.button6{
           </table>
           <table id="operation"  border="1"  cellpadding="5" cellspacing="5">
             <tr align="center">
-            	<td><input type=button value='提交' class="button6"  onclick=h_submit()></td>
-              <td><input type=button value="重置" class="button6"  onclick=rebuild()></td>
               <td width="25" height="25" bgcolor="#FBBB67">&nbsp;</td>
-              <td>假　期&nbsp;&nbsp;</td>
-              <td width="25" bgcolor="#FFFFFF">&nbsp;</td>
-              <td>工作日&nbsp;&nbsp;</td>
+              <td>团队日&nbsp;&nbsp;</td>
               <td width="25" bgcolor="#CFDFF0">&nbsp;</td>
-              <td>今 日</td>
+              <td>散客日</td>
               </tr>
           </table>
         </form>
     </div>
 </div>
-<SCRIPT language="JavaScript">
-	//提交
-function h_submit(){
-	alert(hDays);
-}
-  //重置
- function rebuild(){
-	hDays=[];
-layer.open({
-  content: 'test'
-  ,btn: ['按钮一', '按钮二', '按钮三']
-  , success: function (layero, index) {  
-                //传入参数，并赋值给iframe的元素  
-        var jquerySendHelloButton = $(".layui-layer-btn0");  
-                 jquerySendHelloButton.css("color","red");
-             console.log(jquerySendHelloButton);
-            }, 
-  yes: function(index, layero){
-    //按钮【按钮一】的回调
-    console.log("aaa");
-    layer.closeAll();
 
-  },  cancel: function(){ 
-    //右上角关闭回调
-        console.log("bbb");
-  },btn2: function(index, layero){
-    //按钮【按钮二】的回调
-    console.log("ccc");
-  },btn3: function(index, layero){
-    //按钮【按钮三】的回调
-    console.log("ddd");
-  }
-
-});
-}     
-
-
- </SCRIPT>
 <div id="details" style="margin-top:-1px;"></div>
-   </GF:BodyCaption>    
-   <iframe name="fram" id="fram" style="display:none"></iframe>    
+   </GF:BodyCaption>     
   </body> 
 </html>   

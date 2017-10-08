@@ -531,7 +531,7 @@ function cDay(d) {
 var cld;
 //存放节假日
 var hDays = [];
-function drawCld(SY, SM) {
+function drawCld(SY, SM,arr) {
 
     var i,sD,s,size;
     cld = new calendar(SY, SM);
@@ -551,13 +551,9 @@ function drawCld(SY, SM) {
         if (sD > -1 && sD < cld.length) {  //日期内
             sObj.innerHTML = sD + 1;
             //wly 注册点击事件
-						$("#GD" + i).unbind('click').click(function(){mOck(this,sD + 1);});
-						var nowDays = SY+''+addZ((SM+1))+addZ((sD+1));
-						var hstr = hDays.join();
-						if(hstr.indexOf(nowDays)>-1){
-							 $("#GD" + i).addClass("selday");
-							}
-            if (cld[sD].isToday)  $("#GD" + i).addClass("jinri");  //今日颜色
+			$("#GD" + i).unbind('click').click(function(){mOck(this,sD + 1);});
+            if (arr[sD].type==1)  $("#GD" + i).addClass("jinri");  //今日颜色
+            else if(arr[sD].type==2) $("#GD" + i).addClass("selday");  //今日颜色
 
             sObj.style.color = cld[sD].color;  //国定假日颜色
 
@@ -596,6 +592,7 @@ function drawCld(SY, SM) {
         }
     }
 }
+
 
 
 /*清除数据*/
@@ -781,35 +778,7 @@ function mOvr(thisObj, v) {
 
     }
 }
-//------王立岩------start------
-//日期点击函数
-function mOck(thisObj, v){
-	var onoff = thisObj.attributes["on"].value;
-	var dayContainer = thisObj.getElementsByTagName("font")[0];
-	//记录是否为周末
-	var lx='0';
-	var nian = $('#nian').text();
-	var yue = $('#yue').text();
-	var dayJson = "";
-	var day = dayContainer.innerHTML;
-	var dayColor = dayContainer.attributes["color"];
-	var dayF = nian+'/'+addZ(yue)+'/'+addZ(day);
-	if(dayColor&&dayColor.value=='red'&&getH(dayF)){
-		 lx = '1';
-	}
-	dayJson = '{holiday:'+nian+addZ(yue)+addZ(day)+',lx:'+lx+'}';
-	if(onoff == '0'){
-		//thisObj.style.background='#FBBB67';
-		thisObj.setAttribute("class", "selday"); 
-		thisObj.attributes["on"].value='1';
-		hDays.push(dayJson);
-   }else{
-   	//thisObj.style.background='';
-   	thisObj.setAttribute("class", "");
-   	thisObj.attributes["on"].value='0';
-   	delArry(hDays,dayJson);
-	}
-}
+
 //删除数组指定元素
 function delArry(arr,obj){
 	for (var i = arr.length - 1; i > -1; i--) { 
@@ -859,40 +828,7 @@ function mOut(thisObj) {
 }
 
 
-/*初始化日期*/
 
-$(function() {
-    initRiliIndex();
-    clear();
-    $("#nian").html(tY);
-    $("#yue").html(tM + 1);
-    drawCld(tY, tM);
-
-    /*年份递减*/
-    $("#nianjian").click(function() {
-        dateSelection.goPrevYear();
-
-    });
-    /*年份递加*/
-    $("#nianjia").click(function() {
-        dateSelection.goNextYear();
-
-    });
-
-    /*月份递减*/
-    $("#yuejian").click(function() {
-
-        dateSelection.goPrevMonth();
-    });
-
-    /*月份递加*/
-    $("#yuejia").click(function() {
-        dateSelection.goNextMonth();
-
-    });
-
-
-});
 
 
 var global = {
@@ -984,7 +920,7 @@ var dateSelection = {
         clear();
         $("#nian").html(global.currYear);
         $("#yue").html(parseInt(global.currMonth) + 1);
-        drawCld(global.currYear, global.currMonth);
+        requst(global.currYear, global.currMonth);
 
 
     },

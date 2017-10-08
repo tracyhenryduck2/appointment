@@ -59,23 +59,25 @@ String path = request.getContextPath();
 <body>                                   
 <form name="form1" id="form1" action="<%=path %>/admin/Rules!addRules.action" method="post" target="fram" >   
 <input type="hidden" name="oper" value="${oper}" />
+<input type="hidden" name="rulesBean.date" id="id" value="${rulesBean.date }"/>  
 <input type="hidden" name="rulesBean.id" id="id" value="${rulesBean.id }"/>  
 <table cellpadding="0" cellspacing="0" width="100%" class="GF-grid"> 
   <tr>                                    
     	<td align="right" width="30%" > 
                             规则日期<span class="mark">*</span>   
         </td>                            
-        <td>                             
-            <input type="text" name="rulesBean.date" id="date"  value="${rulesBean.date}" class="GF-field"/>   
+        <td>     
+        <GF:ConvertTime value="${rulesBean.date}" format="yyyy-MM-dd"/>                        
         </td>                            
   </tr>                                                                
   <tr>                                    
     	<td align="right" > 
                             类型<span class="mark">*</span>   
-        </td>                            
+        </td> 
+
         <td>                             
-            <input type="text" name="rulesBean.type" id="type"  value="${rulesBean.type}" class="GF-field"/>   
-        </td>                            
+            <s:select list="#request.cList"  cssClass="GF-field" name="rulesBean.type" id="type"   theme="simple" listKey="id" listValue="name"  value="#request.rulesBean.type" ></s:select>
+        </td>                                                            
   </tr>                                
   <tr>                                    
     	<td align="right" > 

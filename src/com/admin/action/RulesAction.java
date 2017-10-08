@@ -1,11 +1,18 @@
 package com.admin.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.admin.bean.RulesBean;
 import com.admin.dao.RulesDAO;
 import com.common.Common;
 import com.common.BaseActionSupport;
+import com.common.Static;
 
 /**
  * 规则
@@ -20,13 +27,45 @@ public class RulesAction extends BaseActionSupport {
     private RulesDAO dao = new RulesDAO(); 
     private RulesBean rulesBean = new RulesBean();    
     private final String tableDesc = "规则";
-    /**    
+    private String date = null;
+    private final  SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+    
+    
+    public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/**    
      * 转向添加页面  
      * @return  
      */    
     public String toAddRules() {
+    	
+        List<Map<String, Object>> cList = dao.getList();
+        request.setAttribute("cList", cList);
         if ("1".equals(oper)) {   
     	    rulesBean = dao.select(RulesBean.class,rulesBean.getId());  
+    	}else if(date!=null){
+    		try {
+				System.out.println("date == "+date);
+				Date date2 = df.parse(date+" 00:00:00");
+				Long d =date2.getTime()/1000;
+				rulesBean = dao.getRulesByDate(d);
+				if(rulesBean == null){
+					rulesBean = new RulesBean();
+					rulesBean.setDate(d);
+				}
+				
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+                showMessage += "时间格式有误";  
+                return error;  
+			}
     	}    
     	return "toAddRules";    
     } 
@@ -36,14 +75,18 @@ public class RulesAction extends BaseActionSupport {
      */    
     public String addRules() {  
         try {   
-            showMessage = "新增"+tableDesc; 
-            boolean result = true;  
-            if ("1".equals(oper)) {    
-                showMessage = "编辑"+tableDesc;  
+            showMessage = "制定"+tableDesc; 
+            boolean result = false;  
+            
+            int d = dao.getRulesNumByDate(rulesBean.getDate());
+            if(d>0){
                 result = dao.update(rulesBean); 
-            } else { 
-                result = dao.insert(rulesBean); 
+            }else{
+            	result = dao.insert(rulesBean); 
             }
+          
+   
+
             if (result) {  
                 showMessage += "成功";  
                 return reload_success; 
@@ -117,6 +160,77 @@ public class RulesAction extends BaseActionSupport {
         return "search"; 
     }
  
+	/**
+	 * XXXX-XX月的规则列表
+	 * http://SERVER[:PORT]/PROJECTNAME/admin/Rules!monthRulesList.action?month=xxxx-xx
+	 * @return
+	 */
+	public void monthRulesList(){
+        
+		String month = request.getParameter("month")+"";
+		
+		String timestart = month+"-01 00:00:00";
+		Date datestart = null;
+		try {
+			datestart = df.parse(timestart);
+
+		Long timechuo_start = datestart.getTime()/1000;
+		Calendar   calendar   =   Calendar.getInstance();
+		calendar.setTime(datestart);
+		calendar.add(Calendar.MONTH, 1);
+		
+		Long timechuo_end = calendar.getTime().getTime()/1000;
+		
+		
+		List<Map<String,Object>> list=dao.getRuleslist(timechuo_start,timechuo_end);
+		calendar.add(Calendar.MONTH, -1);
+		System.out.println("calendar.get(Calendar.MONTH):"+calendar.get(Calendar.MONTH));
+		int monthday = 0;
+		if(calendar.get(Calendar.YEAR)%400 == 0 || calendar.get(Calendar.YEAR)%4 == 0){
+			
+			monthday = Static.PER_MONTH_DAYS_LEAP[calendar.get(Calendar.MONTH)];	
+		}else{
+			monthday = Static.PER_MONTH_DAYS[calendar.get(Calendar.MONTH)];
+		}
+		List<Map<String,Object>> listnew = new ArrayList<Map<String,Object>>();
+		
+		for(int i=0;i<monthday;i++){
+			boolean flag = false;
+			Map<String,Object> map2 = new HashMap<String,Object>();
+			for(Map<String,Object> map : list){
+				
+		
+				Integer ds =(Integer)map.get("date");
+				long ds2 = ((long)ds)*1000l;
+				Date date = new Date(ds2);
+				Calendar c = Calendar.getInstance();
+				c.setTime(date);
+				int d = c.get(Calendar.DAY_OF_MONTH);
+				if((i+1)== d){
+					flag = true;
+					map2.put("type", map.get("type"));
+					map2.put("number", map.get("number"));
+					map2.put("date",i);
+					break;
+				}
+			}
+			if(!flag){
+				map2.put("type", 0);
+				map2.put("number", 0);
+				map2.put("date",i);
+			}
+			listnew.add(map2);
+		}
+
+		outPrintJSON(listnew);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
+    
     /**    
      * 查询列表页面  
      * @return  
