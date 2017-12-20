@@ -9,8 +9,8 @@ import com.cloopen.rest.sdk.utils.encoder.BASE64Encoder;
 
 public class MD5 {
 	public static String md5(String str) {
-		String s = str;
-		if (s == null) {
+		String s2 = str;
+		if (s2 == null) {
 			return "";
 		} else {
 			String value = null;
@@ -23,7 +23,7 @@ public class MD5 {
 			}
 			BASE64Encoder baseEncoder = new BASE64Encoder();
 			try {
-				value = baseEncoder.encode(md5.digest(s.getBytes("utf-8")));
+				value = baseEncoder.encode(md5.digest(s2.getBytes("utf-8")));
 			} catch (Exception ex) {
 			}
 			return value;
